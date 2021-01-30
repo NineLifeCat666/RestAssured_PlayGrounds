@@ -124,7 +124,7 @@ public class Steps {
         given()
                 .spec(Request.spec())
                 .log().uri()
-                .body(FileUtils.readFromFile("src/test/resources/updateUser"))
+                .body(FileUtils.readFromFile("src/test/resources/updateUser.txt"))
             .when()
                 .post("/users/2")
             .then()
@@ -137,7 +137,7 @@ public class Steps {
         given()
                 .spec(Request.spec())
                 .log().uri()
-                .body(FileUtils.readFromFile("src/test/resources/updateUser"))
+                .body(FileUtils.readFromFile("src/test/resources/updateUser.txt"))
             .when()
                 .patch("/users/2")
             .then()
@@ -156,19 +156,77 @@ public class Steps {
                 .statusCode(204);
     }
 
+    public void registerUser() {
+        User user = new User();
+        user.setEmail("eve.holt@reqres.in");
+        user.setPassword("pistol");
 
+        given()
+                .spec(Request.spec())
+                //.contentType("application/json; charset=utf-8")
+                .log().uri()
+                .body(user)
+            .when()
+                .post("/register")
+            .then()
+                .statusCode(200)
+                .log().body()
+                .body("id", equalTo(4))
+                .body("token", notNullValue());
+    }
 
+    public void unsuccessfulRegistrationUser() {
+        User user = new User();
+        user.setEmail("sydney@fife");
 
+        given()
+                .spec(Request.spec())
+                .log().uri()
+                .body(user)
+            .when()
+                .post("/register")
+            .then()
+                .statusCode(400);
+    }
 
+    public void loginUser() {
+        User user = new User();
+        user.setEmail("eve.holt@reqres.in");
+        user.setPassword("cityslicka");
 
+        given()
+                .spec(Request.spec())
+                .log().uri()
+                .body(user)
+            .when()
+                .post("/login")
+            .then()
+                .statusCode(200)
+                .body("token", notNullValue());
+    }
 
+    public void unsuccessfulLoginUser() {
+        User user = new User();
+        user.setEmail("peter@klaven");
 
+        given()
+                .spec(Request.spec())
+                .log().uri()
+                .body(user)
+            .when()
+                .post("/login")
+            .then()
+                .statusCode(400);
+    }
 
-
-
-
-
-
-
-
+    public void delayedResponse() {
+        given()
+                .spec(Request.spec())
+                .log().uri()
+            .when()
+                .get("users?delay=3")
+            .then()
+                .statusCode(200)
+                .body("data.email", hasItem("george.bluth@reqres.in"));
+    }
 }

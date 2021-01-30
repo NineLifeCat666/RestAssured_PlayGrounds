@@ -104,8 +104,44 @@ public class ReqResInTests extends TestBase {
         });
     }
 
+    @Test
+    @DisplayName("Register user")
+        void registerUser() {
+        step("Регистрация пользователя", () -> {
+            steps.registerUser();
+        });
+    }
 
+    @Test
+    @DisplayName("Unsuccessful registration user")
+    void unsuccessfulRegisterUser() {
+        step("Неудачная регистрация пользователя", () -> {
+            steps.unsuccessfulRegistrationUser();
+        });
+    }
 
+    @Test
+    @DisplayName("Login User")
+    void loginUser() {
+        step("Вход пользователя", () -> {
+            steps.loginUser();
+        });
+    }
+
+    @Test
+    @DisplayName("Unsuccessful login user")
+    void unsuccessfulLoginUser() {
+        step("Неудачная попытка входа пользователя");
+        steps.unsuccessfulLoginUser();
+    }
+
+    @Test
+    @DisplayName("Delayed response")
+    void delayedResponse() {
+        step("Отложенный ответ", () -> {
+            steps.delayedResponse();
+        });
+    }
 }
 
 
