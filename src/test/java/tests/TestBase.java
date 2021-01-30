@@ -6,11 +6,11 @@ import org.junit.jupiter.api.BeforeAll;
 import steps.Steps;
 
 public class TestBase {
-    static Steps steps; //что это за тип в java Steps?
+    static Steps steps;
 
     @BeforeAll
-    public static void init() { //init это просто название метода?
+    public static void init() {
         steps = new Steps();
-        RestAssured.filters(new AllureRestAssured()); //зачем эта строка?
+        RestAssured.filters(new AllureRestAssured());
     }
 }
